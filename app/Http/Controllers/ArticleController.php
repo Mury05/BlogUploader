@@ -72,7 +72,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -80,7 +80,22 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $data = $request->validated();
+
+        
+        // Gérer l'upload de l'image
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        // Gérer l'upload du fichier PDF
+        if ($request->hasFile('filepdf')) {
+            $data['file_path'] = $request->file('filepdf')->store('articles', 'public');
+        }
+        $article->update($data);
+        return redirect('/articles')->with(['success_message' => 'L\'article a été modifié !']);
+
+   
     }
 
     /**
@@ -88,6 +103,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect('/articles')->with(['success_message' => 'L\'article a été supprimée !']);
+
     }
 }

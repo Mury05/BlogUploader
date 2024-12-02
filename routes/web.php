@@ -21,4 +21,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::post('/articles/create', [ArticleController::class, 'store'])->name('articles.store');
-Route::get('/article/{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+Route::put('/articles/{article}/edit', [ArticleController::class, 'update'])->name('articles.update');
+Route::delete('/articles/{article}/delete', [ArticleController::class, 'destroy'])->name('articles.delete');

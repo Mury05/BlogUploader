@@ -11,7 +11,7 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string'],
+            'content' => ['string', 'nullable'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'filepdf' => ['nullable', 'file', 'mimes:pdf']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Le titre est obligatoire.',
+            'title.string' => 'Le titre doit être une chaîne de caractères.',
+            'content.string' => 'Le contenu doit être une chaîne de caractères.',
+            'image.image' => 'Le fichier sélectionné doit être une image.',
+            'image.mimes' => 'L\'image doit être au format jpeg, png, jpg, gif ou svg.',
+            'image.max' => 'L\'image ne doit pas dépasser 2 Mo.',
+            'filepdf.file' => 'Le fichier doit être un fichier valide.',
+            'filepdf.mimes' => 'Le fichier PDF doit être au format pdf.',
         ];
     }
 }

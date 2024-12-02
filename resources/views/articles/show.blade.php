@@ -57,9 +57,9 @@
                 <div class="flex justify-between items-center mb-8">
 
                     <div class=" text-blue-700 mt-3 hover:underline">
-                        <a href="/article/{{ $article->id }}/edit">Éditer l'article</a>
+                        <a href="{{route('articles.edit', ['article' => $article])}}">Éditer l'article</a>
                     </div>
-                    <form action="/article/{{ $article->id }}/delete" method="POST">
+                    <form action="{{route('articles.delete', ['article' => $article])}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Effacer l'article"
