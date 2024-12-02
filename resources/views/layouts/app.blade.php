@@ -8,16 +8,19 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="font-sans antialiased bg-gray-50 ">
+
     <div class="mx-auto max-w-screen-xl mt-4">
         @section('header')
             {{-- This is the master header. --}}
         @show
 
         <div class="">
+            <x-notifications.toast/>
             @yield('content')
         </div>
     </div>
+
 </body>
 
 </html>

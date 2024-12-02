@@ -1,3 +1,3 @@
 <div>
-    <!-- Well begun is half done. - Aristotle -->
+    <button type="{{$type}}" class="{{$class ?? ''}}">{{$name}}</button>
 </div>
