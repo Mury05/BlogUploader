@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -29,8 +28,7 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticleRequest $request)
-    {
+    public function store(ArticleRequest $request) {
         // Récupérer l'utilisateur connecté
         $user = Auth::user();
 
@@ -78,11 +76,11 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
         $data = $request->validated();
 
-        
+
         // Gérer l'upload de l'image
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
@@ -95,7 +93,7 @@ class ArticleController extends Controller
         $article->update($data);
         return redirect('/articles')->with(['success_message' => 'L\'article a été modifié !']);
 
-   
+
     }
 
     /**

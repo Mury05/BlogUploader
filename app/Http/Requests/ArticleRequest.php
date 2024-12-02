@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateArticleRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -42,4 +42,6 @@ class UpdateArticleRequest extends FormRequest
             'filepdf.mimes' => 'Le fichier PDF doit être au format pdf.',
         ];
     }
+
+
 }

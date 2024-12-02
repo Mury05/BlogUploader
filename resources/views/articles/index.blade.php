@@ -7,8 +7,8 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-between items-center mx-5 mt-6">
-        <h2 class="text-2xl font-bold m-6">Articles</h2>
+    <div class="flex justify-between items-center max-w-screen-xl mx-auto mt-6">
+        <h2 class="text-3xl font-bold ">Articles</h2>
         {{-- @can('see-admin-menu')
             <a href="/articles/create">
                 <button class="p-3 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-700">
