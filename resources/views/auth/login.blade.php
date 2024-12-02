@@ -15,8 +15,8 @@
 
                         <div>
                             @error('email')
-                            <div class="mb-3 text-red-500 text-xs">{{ $message }}</div>
-                        @enderror
+                                <div class="mb-3 text-red-500 text-xs">{{ $message }}</div>
+                            @enderror
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your
                                 email</label>
                             <input type="email" name="email" id="email"

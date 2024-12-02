@@ -10,6 +10,6 @@ Route::get('/', function () {
 
 // Authentification routes
 Route::get('/login',[AuthController::class, 'index'])->name('login');
-Route::post('/login',[AuthController::class, 'index'])->name('login-auth');
+Route::post('/login',[AuthController::class, 'authenticate'])->name('login-auth');
 Route::get('/register',[RegisterController::class, 'index'])->name('register');
-Route::post('/register',[RegisterController::class, 'index'])->name('register-create');
+Route::post('/register',[RegisterController::class, 'create'])->name('register-create');

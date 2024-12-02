@@ -11,10 +11,10 @@
 <body>
     <div class="mx-auto max-w-screen-xl mt-4">
         @section('header')
-            This is the master header.
+            {{-- This is the master header. --}}
         @show
 
-        <div class="container">
+        <div class="">
             @yield('content')
         </div>
     </div>
