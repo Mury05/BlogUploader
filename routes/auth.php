@@ -12,4 +12,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'create'])->name('register-create');
 });
 
+Route::get('/profile/edit', [AuthController::class, 'edit'])->name('profile.edit')->middleware('auth');
+Route::put('/profile', [AuthController::class, 'update'])->name('profile.update')->middleware('auth');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

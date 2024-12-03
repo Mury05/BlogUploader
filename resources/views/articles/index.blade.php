@@ -24,11 +24,11 @@
                     </button>
                 </a>
             {{-- @endif--}}
-        @endauth 
+        @endauth
     </div>
 
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div class="grid gap-8 lg:grid-cols-2">
+        <div class="grid gap-8 lg:grid-cols-3">
             @each('partials.article', $articles, 'article', 'partials.no-articles')
         </div>
     </div>

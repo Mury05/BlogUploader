@@ -12,6 +12,11 @@
          </span>
          <span class="text-sm">{{ $article->created_at->diffForHumans() }}</span>
      </div>
+     <div class="mb-3" >
+        @if ($article->image)
+            <img class="h-full w-full" src="{{ asset('storage/' . $article->image) }}" alt="image_cover">
+        @endif
+    </div>
      <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 "><a href="#">{{ $article['title'] }}</a>
      </h2>
      <p class="mb-5 font-light text-gray-500 ">{{ $article->user->name }}</p>

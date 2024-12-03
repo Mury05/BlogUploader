@@ -23,9 +23,11 @@ class ArticleRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'content' => ['string', 'nullable'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'filepdf' => ['nullable', 'file', 'mimes:pdf']
+            'body' => ['required', 'string'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'check' => ['nullable', 'boolean'], // Peut être null si non coché
+            'filepdf' => ['required_if:check,0', 'nullable','file', 'mimes:pdf'], // Requis si check = 0
+            'content' => ['required_if:check,1', 'nullable','string'], // Requis si check = 1
         ];
     }
 
@@ -34,12 +36,18 @@ class ArticleRequest extends FormRequest
         return [
             'title.required' => 'Le titre est obligatoire.',
             'title.string' => 'Le titre doit être une chaîne de caractères.',
-            'content.string' => 'Le contenu doit être une chaîne de caractères.',
+            'body.required' => 'La description est obligatoire.',
+            'body.string' => 'La description doit être une chaîne de caractères.',
+            'image.required' => 'L\'image de couverture est obligatoire.',
             'image.image' => 'Le fichier sélectionné doit être une image.',
             'image.mimes' => 'L\'image doit être au format jpeg, png, jpg, gif ou svg.',
             'image.max' => 'L\'image ne doit pas dépasser 2 Mo.',
+            'content.string' => 'Le contenu doit être une chaîne de caractères.',
+            'content.required_if' => 'Le contenu est requis si vous choisissez d’ajouter un contenu.',
+            'filepdf.required_if' => 'Le fichier PDF est requis si vous choisissez de téléverser un fichier.',
             'filepdf.file' => 'Le fichier doit être un fichier valide.',
             'filepdf.mimes' => 'Le fichier PDF doit être au format pdf.',
+
         ];
     }
 

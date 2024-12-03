@@ -28,7 +28,7 @@
                     <div>
                         <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 "><a
                                 href="#">{{ $article['title'] }}</a></h2>
-                        <p class="my-5 font-light text-gray-900">{{ $article->content }}</p>
+                        <p class="my-5 font-light text-gray-900">{{ $article->body }}</p>
 
                         <p class="mb-5 font-light text-gray-500 ">{{ $article->user->name }}</p>
                         @if ($article->file_path)
@@ -45,29 +45,40 @@
                             </a>
                         @endif
                     </div>
-                    <div>
+                    <div class="w-1/2">
                         @if ($article->image)
-
-                        <img class="h-60 w-60" src="{{ asset('storage/' . $article->image) }}" alt="image">
+                            <img class="" src="{{ asset('storage/' . $article->image) }}" alt="image">
                         @endif
-                        
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center mb-8">
+                @auth
+                    <div class="flex justify-between items-center mb-8">
 
-                    <div class=" text-blue-700 mt-3 hover:underline">
-                        <a href="{{route('articles.edit', ['article' => $article])}}">Éditer l'article</a>
+
+                        @if (auth()->user()->can('update', $article))
+                            <div class=" text-blue-700 mt-3 hover:underline">
+                                <a href="{{ route('articles.edit', ['article' => $article]) }}">Éditer l'article</a>
+                            </div>
+                        @endif
+                        @if (auth()->user()->can('delete', $article))
+                            <form action="{{ route('articles.delete', ['article' => $article]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Effacer l'article"
+                                    class=" text-red-500 mt-3 cursor-pointer hover:underline">
+                            </form>
+                        @endif
                     </div>
-                    <form action="{{route('articles.delete', ['article' => $article])}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input type="submit" value="Effacer l'article"
-                            class=" text-red-500 mt-3 cursor-pointer hover:underline">
-                    </form>
-                </div>
+                @endauth
                 @if ($article->file_path)
-                    <iframe src="{{ asset('storage/' . $article->file_path) }}" width="100%" height="600px"></iframe>
+                    <p class="my-5 font-light text-gray-900">Prévisualisation de l'article</p>
+                    <iframe class="mt-2" src="{{ asset('storage/' . $article->file_path) }}" width="100%"
+                        height="600px"></iframe>
+                @endif
+                @if ($article->content)
+                    <p class="my-5 font-light text-gray-900">Contenu de l'article</p>
+                    <p class="my-5 font-light text-gray-950">{!! $article->content !!}</p>
                 @endif
             </article>
         </div>

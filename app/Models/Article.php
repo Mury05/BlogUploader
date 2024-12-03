@@ -13,6 +13,7 @@ class Article extends Model
 
     protected $fillable = [
         'title',
+        'body',
         'image',
         'content',
         'file_path',

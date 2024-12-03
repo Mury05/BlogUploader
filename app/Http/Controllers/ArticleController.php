@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -22,13 +24,16 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $check = old('check', false);  // Par défaut, on suppose que l'utilisateur n'a pas coché la case.
+        return view('articles.create', compact('check'));
+        // return view('articles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ArticleRequest $request) {
+    public function store(ArticleRequest $request)
+    {
         // Récupérer l'utilisateur connecté
         $user = Auth::user();
 
@@ -37,22 +42,31 @@ class ArticleController extends Controller
 
         // Ajouter l'ID de l'utilisateur
         $data['user_id'] = $user->id;
+        // dd($data);
 
         // Gérer l'upload de l'image
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
-        // Gérer l'upload du fichier PDF
-        if ($request->hasFile('filepdf')) {
-            $data['file_path'] = $request->file('filepdf')->store('articles', 'public');
-        }
 
-        // dd($data);
+        // Vérifier si l'utilisateur a choisi d'ajouter un contenu
+        if ($request->check) {
+            // Si le contenu est sélectionné, le fichier PDF n'est pas requis
+            $data['file_path'] = null;
+        } else {
+            // Si un fichier PDF est sélectionné, le contenu n'est pas requis
+            $data['content'] = null;
+
+            // Gérer l'upload du fichier PDF
+            if ($request->hasFile('filepdf')) {
+                $data['file_path'] = $request->file('filepdf')->store('articles', 'public');
+            }
+        }
         // Créer l'article
         Article::create($data);
 
-        // Redirection avec un message de succès
+        // // Redirection avec un message de succès
         return redirect('/articles')->with('success_message', 'Article créé avec succès !');
     }
 
@@ -70,6 +84,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
+
         return view('articles.edit', compact('article'));
     }
 
@@ -78,6 +94,8 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         $data = $request->validated();
 
 
@@ -101,6 +119,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $article->delete();
         return redirect('/articles')->with(['success_message' => 'L\'article a été supprimée !']);
 

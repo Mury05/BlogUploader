@@ -19,11 +19,21 @@ class RegisterController extends Controller
      */
     public function create(RegisterRequest $request)
     {
-        User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
-        ]);
+         // Initialiser le chemin de l'avatar
+    $avatarPath = null;
+
+    // Gérer l'upload de l'image
+    if ($request->hasFile('avatar')) {
+        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+    }
+
+    // Créer l'utilisateur
+    User::create([
+        'name' => $request['name'],
+        'email' => $request['email'],
+        'password' => bcrypt($request['password']),
+        'avatar' => $avatarPath, // Utiliser le chemin de l'avatar
+    ]);
 
         $user = User::where('email', $request['email'])->firstOrFail();
         Auth::login($user);
