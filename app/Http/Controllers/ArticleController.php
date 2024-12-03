@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -92,7 +93,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         $this->authorize('update', $article);
 
@@ -104,10 +105,20 @@ class ArticleController extends Controller
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
-        // Gérer l'upload du fichier PDF
+        // Vérifier si l'utilisateur a choisi d'ajouter un contenu
+        if ($request->check) {
+            // Si le contenu est sélectionné, le fichier PDF n'est pas requis
+            $data['file_path'] = null;
+        } else {
+            // Si un fichier PDF est sélectionné, le contenu n'est pas requis
+            $data['content'] = null;
+
+            // Gérer l'upload du fichier PDF
         if ($request->hasFile('filepdf')) {
             $data['file_path'] = $request->file('filepdf')->store('articles', 'public');
         }
+        }
+
         $article->update($data);
         return redirect('/articles')->with(['success_message' => 'L\'article a été modifié !']);
 
