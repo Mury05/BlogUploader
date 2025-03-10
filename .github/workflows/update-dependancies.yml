@@ -1,0 +1,32 @@
+name: Automatic Dependency Update
+run-name: "Mise à jour automatique des dépendances"
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Tous les lundis à 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Update Composer Dependencies
+        run: composer update --prefer-dist --no-progress
+
+      - name: Commit and Push Changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: 'github-actions[bot]'
+          author_email: 'github-actions[bot]@users.noreply.github.com'
+          message: 'chore: update composer dependencies'
+          add: 'composer.lock'
