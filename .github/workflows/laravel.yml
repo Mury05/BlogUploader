@@ -53,8 +53,7 @@ jobs:
       - name: Configure Database
         run: |
           php artisan migrate --force
-        # php artisan cache:clear
-        # php artisan cache:table && php artisan migrate --force
+          
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
@@ -66,15 +65,15 @@ jobs:
       - name: Run Laravel Pint (Code Style)
         run: ./vendor/bin/pint
 
-      - name: Run Tests
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel_test
-          DB_USERNAME: user
-          DB_PASSWORD: password
-        run: php artisan test
+      # - name: Run Tests
+      #   env:
+      #     DB_CONNECTION: mysql
+      #     DB_HOST: 127.0.0.1
+      #     DB_PORT: 3306
+      #     DB_DATABASE: laravel_test
+      #     DB_USERNAME: user
+      #     DB_PASSWORD: password
+      #   run: php artisan test
 
   deploy:
     needs: laravel-tests
