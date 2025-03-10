@@ -27,7 +27,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.2'
           extensions: mbstring, pdo, mysql, zip
 
       - name: Cache Composer dependencies
@@ -42,7 +42,7 @@ jobs:
       #   run: composer clear-cache
 
       - name: Install Dependencies
-        run: composer update --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
