@@ -38,8 +38,8 @@ jobs:
           restore-keys: |
             composer-
 
-      - name: Clear Composer cache
-        run: composer clear-cache
+      # - name: Clear Composer cache
+      #   run: composer clear-cache
 
       - name: Install Dependencies
         run: composer install --prefer-dist --no-progress
