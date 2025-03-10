@@ -52,16 +52,14 @@ jobs:
 
       - name: Configure Database
         run: |
-          if ! php artisan migrate:status | grep -q "cache"; then
-            php artisan cache:table
-          fi
-          php artisan migrate --force
+          php artisan cache:table && php artisan migrate --force
           php artisan cache:clear
+        # php artisan migrate --force
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
-          DB_DATABASE: laravel_test
+          DB_DATABASE: blog_uploader
           DB_USERNAME: user
           DB_PASSWORD: password
 
