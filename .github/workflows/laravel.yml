@@ -52,8 +52,8 @@ jobs:
 
       - name: Configure Database
         run: |
-          php artisan cache:clear
           php artisan cache:table && php artisan migrate
+          php artisan cache:clear
         # php artisan migrate --force
         env:
           DB_CONNECTION: mysql
