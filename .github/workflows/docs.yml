@@ -22,7 +22,10 @@ jobs:
 
       - name: Install Dependencies
         run: composer install --prefer-dist --no-progress
-        
+
+      - name: Configure Composer allow-plugins
+        run: composer global config --no-plugins allow-plugins.symfony/flex true
+
       - name: Install phpDocumentor
         run: composer global require phpdocumentor/phpdocumentor
 
