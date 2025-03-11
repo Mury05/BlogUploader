@@ -27,7 +27,10 @@ jobs:
         run: composer global config --no-plugins allow-plugins.symfony/flex true
 
       - name: Install phpDocumentor
-        run: composer global require phpdocumentor/phpdocumentor
+        run: composer require --dev phpdocumentor/phpdocumentor
+
+      - name: "Vérifier l'installation de phpDocumentor"
+        run: ls -la vendor/bin/
 
       - name: Generate Documentation
         run: vendor/bin/phpdoc -d . -t docs
