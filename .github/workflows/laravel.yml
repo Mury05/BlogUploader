@@ -69,7 +69,7 @@ jobs:
         run: composer require --dev nunomaduro/larastan
 
       - name: Run Larastan
-        run: vendor/bin/phpstan analyse --memory-limit=1G
+        run: vendor/bin/phpstan analyse app --memory-limit=1G
 
       # - name: Run Tests
       #   env:
