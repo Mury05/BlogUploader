@@ -72,13 +72,13 @@ jobs:
         run: vendor/bin/phpstan analyse app database resources routes/web.php --memory-limit=1G
 
       - name: Run Tests
-        # env:
-        #   DB_CONNECTION: mysql
-        #   DB_HOST: 127.0.0.1
-        #   DB_PORT: 3306
-        #   DB_DATABASE: laravel_test
-        #   DB_USERNAME: user
-        #   DB_PASSWORD: password
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: laravel_test
+          DB_USERNAME: user
+          DB_PASSWORD: password
         run: php artisan test
 
   deploy:
